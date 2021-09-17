@@ -27,3 +27,9 @@ app.use("/api/courses", passport.authenticate("jwt", { session: false }), course
 app.listen(8080, () => { 
   console.log("server running at port 8080.");
 });
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> fa56347e77d8c5c23953b54706394536ad7f2c71

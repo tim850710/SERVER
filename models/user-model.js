@@ -30,12 +30,16 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.method.isStudent = function () {
+userSchema.methods.isStudent = function () {   //這問題找超久 mthods 沒+s
   return this.role == "student";
 };
 
-userSchema.method.isInstructor = function () {
+userSchema.methods.isInstructor = function () {
   return this.role == "instructor";
+};
+
+userSchema.methods.isAdmin = function () {
+  return this.role == "admin";
 };
 
 //mongoose schema middleware
@@ -50,7 +54,7 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-userSchema.method.comparePassword = function (password, cb) {
+userSchema.methods.comparePassword = function (password, cb) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
     if (err) {
       return cb(err, isMatch);

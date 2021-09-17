@@ -3,8 +3,10 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
-const bodyParser = require("body-parser");
 const authRoute = require("./routes").auth;
+const courseRoute = require("./routes").course;
+const passport = require("passport");
+require("./config/passport")(passport);
 
 mongoose
   .connect(process.env.DB_CONNECT, {
@@ -19,13 +21,9 @@ mongoose
   });
 
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use("/api/user", authRoute);
-
-app.listen(8080, () => {
+app.use("/api/courses", passport.authenticate("jwt", { session: false }), courseRoute);
+app.listen(8080, () => { 
   console.log("server running at port 8080.");
 });
-
-
-
-push test !
